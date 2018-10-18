@@ -12,12 +12,20 @@
 
   - jest [单元测试]
 
-  - vue
+  - vue/react 框架
 
 ## 文件目录
 
+
+```bash
 |- src
 |- |- app
 |- |- components
 |- |- global
 |- |- |- reset.css
+```
+
+## BUG
+
+  - vue无显示
+  - react报错

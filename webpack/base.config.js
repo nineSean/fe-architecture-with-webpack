@@ -3,21 +3,29 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin")
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
+  // context字段指定webpack编译的上下文
+  context: path.resolve(process.cwd(), 'src/app'),
+  // 浏览器生成源码以方便调试
+  devtool: 'source-map',
+  resolve: {
+    // 文件后缀查询
+    extensions: ['.js', '.jsx', '.json', '.css', '.scss'],
+  },
   entry: {
     sale: './sale.js',
     list: './list.js'
   },
-  watch: true,
-  // context属性配置entry的上下文
-  context: path.resolve(process.cwd(), 'src/app'),
   output: {
+    // 所有静态资源以此路径为基准
+    // 所有打包资源的更新目录
+    publicPath: '/dist',
     path: path.resolve(process.cwd(), 'dist'),
     filename: '[name].js'
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         use: 'babel-loader'
       },
       {
@@ -49,8 +57,10 @@ module.exports = {
     new ExtractTextPlugin("./css/[name].css"),
     // 创建HTML标签，并且插入相关外部资源标签，如JS、CSS等
     new HtmlWebpackPlugin({  // Also generate a test.html
-      filename: 'test.html',
-      template: path.resolve(process.cwd(), 'src/base/webpack.template.html')
+      filename: 'sale.html',
+      template: '../base/webpack.template.html',
+      chunks: ['sale'],
+      inject: true
     })
   ],
 }
